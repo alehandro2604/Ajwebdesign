@@ -14,53 +14,89 @@ document.addEventListener('mouseup', () => {
   cursor.style.transform = 'translate(-50%, -50%) scale(1)';
 });
 
-// GSAP animations
-gsap.from('nav', {
-  opacity: 0,
-  y: -50,
-  duration: 1,
-  ease: 'power3.out',
-  onComplete: function() {
-    // Force nav to be visible after animation
-    document.querySelector('nav').style.opacity = 1;
-    document.querySelector('nav').style.transform = 'translateY(0)';
+// Safe GSAP check
+document.addEventListener('DOMContentLoaded', function() {
+  // Force elements to be visible on mobile
+  if (window.isMobile || window.gsapDisabled) {
+    console.log('Mobile view: forcing elements to be visible');
+    
+    // Force all text elements to be visible
+    const textElements = document.querySelectorAll('h1, h2, h3, p, .cta-btn, .service-card, .project-card');
+    textElements.forEach(el => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      el.style.visibility = 'visible';
+      el.style.display = 'block';
+    });
+    
+    // Force specific layout elements
+    document.querySelectorAll('.service-card, .project-card').forEach(card => {
+      card.style.opacity = '1';
+      card.style.transform = 'none';
+    });
+    
+    // Make sure navigation is visible
+    const nav = document.querySelector('nav');
+    if (nav) {
+      nav.style.display = 'flex';
+      nav.style.opacity = '1';
+      nav.style.visibility = 'visible';
+    }
+    
+    // Skip all GSAP code
+    return;
   }
-});
+  
+  // Only run GSAP code if it's available and not disabled
+  if (typeof gsap !== 'undefined' && !window.gsapDisabled) {
+    // GSAP animations
+    gsap.from('nav', {
+      opacity: 0,
+      y: -50,
+      duration: 1,
+      ease: 'power3.out',
+      onComplete: function() {
+        document.querySelector('nav').style.opacity = 1;
+        document.querySelector('nav').style.transform = 'translateY(0)';
+      }
+    });
 
-gsap.from('h1', {
-  opacity: 0,
-  x: -100,
-  duration: 1,
-  delay: 0.5,
-  ease: 'power3.out',
-  onComplete: () => gsap.to('h1', { opacity: 1 })
-});
+    gsap.from('h1', {
+      opacity: 0,
+      x: -100,
+      duration: 1,
+      delay: 0.5,
+      ease: 'power3.out',
+      onComplete: () => gsap.to('h1', { opacity: 1 })
+    });
 
-gsap.from('h2', {
-  opacity: 0,
-  x: -100,
-  duration: 1,
-  delay: 0.7,
-  ease: 'power3.out',
-  onComplete: () => gsap.to('h2', { opacity: 1 })
-});
+    gsap.from('h2', {
+      opacity: 0,
+      x: -100,
+      duration: 1,
+      delay: 0.7,
+      ease: 'power3.out',
+      onComplete: () => gsap.to('h2', { opacity: 1 })
+    });
 
-gsap.from('p', {
-  opacity: 0,
-  x: -100,
-  duration: 1,
-  delay: 0.9,
-  ease: 'power3.out',
-  onComplete: () => gsap.to('p', { opacity: 1 })
-});
+    gsap.from('p', {
+      opacity: 0,
+      x: -100,
+      duration: 1,
+      delay: 0.9,
+      ease: 'power3.out',
+      onComplete: () => gsap.to('p', { opacity: 1 })
+    });
 
-gsap.from('.cta-btn', {
-  opacity: 0,
-  x: -100,
-  duration: 1,
-  delay: 1.1,
-  ease: 'power3.out',
-  onComplete: () => gsap.to('.cta-btn', { opacity: 1 })
+    gsap.from('.cta-btn', {
+      opacity: 0,
+      x: -100,
+      duration: 1,
+      delay: 1.1,
+      ease: 'power3.out',
+      onComplete: () => gsap.to('.cta-btn', { opacity: 1 })
+    });
+  }
 });
 
 // 3D background with Three.js - only initialize on desktop
@@ -262,5 +298,7 @@ if (typeof ScrollSmoother !== 'undefined') {
     }, 200);
   });
 }
+
+
 
 
