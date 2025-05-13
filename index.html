@@ -87,9 +87,9 @@
 
   <section class="hero">
     <div class="hero-content">
-      <h1>Aleandro</h1>
-      <h2>Web Designer & Developer</h2>
-      <p>Creating modern digital experiences</p>
+      <h1 class="text-reveal">Alehandro</h1>
+      <h2 class="text-reveal">Web Designer & Developer</h2>
+      <p class="text-reveal">Creating modern digital experiences</p>
       <a href="contact.html" class="cta-btn">Get in touch</a>
     </div>
     <div id="hero-3d" class="object-rotate" data-object="sphere"></div>
@@ -200,31 +200,10 @@
         console.log('Mobile device detected, disabling GSAP animations');
         window.gsapDisabled = true;
       }
-      
-      // Ensure mobile menu toggle works
-      const menuToggle = document.querySelector('.menu-toggle');
-      const navLinks = document.querySelector('.nav-links');
-      
-      if (menuToggle && navLinks) {
-        console.log('Mobile menu elements found, adding event listeners');
-        menuToggle.addEventListener('click', function() {
-          console.log('Menu toggle clicked');
-          menuToggle.classList.toggle('active');
-          navLinks.classList.toggle('active');
-          document.body.style.overflow = menuToggle.classList.contains('active') ? 'hidden' : '';
-        });
-      }
     });
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
 
 
 
