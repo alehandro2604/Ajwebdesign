@@ -1,7 +1,11 @@
 // Universal fix for both mobile and desktop
 (function() {
-  // Execute immediately
-  console.log('Universal fix running immediately');
+  // Detect mobile more reliably
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 768;
+  window.isMobile = isMobile;
+  
+  console.log('Device detection:', isMobile ? 'Mobile' : 'Desktop');
+  console.log('Screen dimensions:', window.innerWidth, 'x', window.innerHeight);
   
   // Force all elements to be visible
   function forceVisibility() {
@@ -42,6 +46,46 @@
     }
   }
   
+  // Apply CSS animations for mobile
+  function applyCssAnimations() {
+    if (!isMobile) return;
+    
+    console.log('Applying CSS animations for mobile');
+    
+    // Apply to headings
+    document.querySelectorAll('h1').forEach((el, i) => {
+      el.classList.add('mobile-slide-left', `mobile-stagger-${i+1}`);
+    });
+    
+    document.querySelectorAll('h2').forEach((el, i) => {
+      el.classList.add('mobile-slide-left', `mobile-stagger-${i+1}`);
+    });
+    
+    document.querySelectorAll('h3').forEach((el, i) => {
+      el.classList.add('mobile-fade-in', `mobile-stagger-${i % 5 + 1}`);
+    });
+    
+    // Apply to paragraphs
+    document.querySelectorAll('p').forEach((el, i) => {
+      el.classList.add('mobile-fade-in', `mobile-stagger-${i % 5 + 1}`);
+    });
+    
+    // Apply to buttons
+    document.querySelectorAll('.cta-btn, .project-btn, .service-link, button').forEach((el, i) => {
+      el.classList.add('mobile-scale-in', `mobile-stagger-${i % 5 + 1}`);
+    });
+    
+    // Apply to cards
+    document.querySelectorAll('.service-card, .project-card, .project-item, .skill-item, .timeline-item, .education-item').forEach((el, i) => {
+      el.classList.add('mobile-fade-in', `mobile-stagger-${i % 5 + 1}`);
+    });
+    
+    // Apply to sections
+    document.querySelectorAll('section').forEach((el, i) => {
+      el.style.opacity = '1'; // Ensure sections are visible
+    });
+  }
+  
   // Run immediately
   forceVisibility();
   
@@ -50,16 +94,24 @@
     console.log('DOM loaded - ensuring visibility');
     forceVisibility();
     
-    // Run animations if GSAP is available
-    if (typeof gsap !== 'undefined') {
-      console.log('GSAP available - running animations');
+    // Apply CSS animations for mobile
+    if (isMobile) {
+      applyCssAnimations();
+    } else if (typeof gsap !== 'undefined') {
+      // Use GSAP for desktop
+      console.log('Using GSAP for desktop animations');
       
-      // Simple fade-in for all sections
+      // Register ScrollTrigger if available
+      if (typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+      }
+      
+      // Desktop animations
       gsap.utils.toArray('section').forEach(section => {
         gsap.from(section, {
-          opacity: 0.5,
-          y: 30,
-          duration: 0.8,
+          opacity: 0,
+          y: 50,
+          duration: 1,
           ease: 'power2.out',
           scrollTrigger: {
             trigger: section,
@@ -76,11 +128,17 @@
     console.log('Window loaded - final visibility check');
     forceVisibility();
     
-    // Force refresh ScrollTrigger if available
-    if (typeof ScrollTrigger !== 'undefined') {
+    // Apply CSS animations again for mobile
+    if (isMobile) {
+      applyCssAnimations();
+    }
+    
+    // Force refresh ScrollTrigger if available for desktop
+    if (!isMobile && typeof ScrollTrigger !== 'undefined') {
       setTimeout(() => {
         ScrollTrigger.refresh();
       }, 500);
     }
   });
 })();
+

@@ -1,41 +1,60 @@
-// Custom cursor
-const cursor = document.querySelector('.cursor');
+// Custom cursor - only for desktop
+if (!window.isMobile) {
+  const cursor = document.querySelector('.cursor');
+  if (cursor) {
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
 
-document.addEventListener('mousemove', (e) => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-});
+    document.addEventListener('mousedown', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
+    });
 
-document.addEventListener('mousedown', () => {
-  cursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
-});
-
-document.addEventListener('mouseup', () => {
-  cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-});
+    document.addEventListener('mouseup', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+    });
+  }
+}
 
 // Safe GSAP check
 document.addEventListener('DOMContentLoaded', function() {
-  // Only run this if mobile or gsap was disabled
+  console.log('main.js loaded, isMobile:', window.isMobile);
+  
+  // Only run this if mobile
   if (window.isMobile) {
     console.log('Mobile view: ensuring elements are visible');
     
-    // Make sure elements are visible but allow for animations
-    setTimeout(() => {
-      const textElements = document.querySelectorAll('h1, h2, h3, p, .cta-btn, .service-card, .project-card');
-      textElements.forEach(el => {
-        if (parseFloat(getComputedStyle(el).opacity) < 0.5) {
-          el.style.opacity = '1';
-          el.style.transform = 'none';
-          el.style.visibility = 'visible';
+    // Make sure elements are visible immediately
+    const textElements = document.querySelectorAll('h1, h2, h3, p, .cta-btn, .service-card, .project-card');
+    textElements.forEach(el => {
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      el.style.visibility = 'visible';
+    });
+    
+    // Use simpler animations for mobile
+    if (typeof gsap !== 'undefined') {
+      console.log('GSAP available on mobile - using simple animations');
+      
+      // Simple fade for text elements
+      gsap.from('h1, h2, p, .cta-btn', {
+        opacity: 0,
+        y: 20,
+        duration: 0.5,
+        stagger: 0.1,
+        ease: 'power1.out',
+        onComplete: function() {
+          // Force visibility after animation
+          document.querySelectorAll('h1, h2, p, .cta-btn').forEach(el => {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+          });
         }
       });
-    }, 2000); // Give animations 2 seconds to start, then force visibility
-  }
-  
-  // Run GSAP code regardless of device type
-  if (typeof gsap !== 'undefined') {
-    // GSAP animations
+    }
+  } else if (typeof gsap !== 'undefined') {
+    // Desktop GSAP animations
     gsap.from('nav', {
       opacity: 0,
       y: -50,
@@ -284,6 +303,7 @@ if (typeof ScrollSmoother !== 'undefined') {
     }, 200);
   });
 }
+
 
 
 

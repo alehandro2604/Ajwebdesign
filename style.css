@@ -375,7 +375,7 @@ p {
   transition: var(--transition);
   opacity: 0;
   align-self: flex-start;
-  margin-left: 94px;
+  margin-left: 0; /* Remove the 94px margin */
   text-align: center;
 }
 
@@ -880,4 +880,5 @@ section, .hero, .services, .featured-projects, .cta-section {
 nav {
   z-index: 1000;
 }
+
 
