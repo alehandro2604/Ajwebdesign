@@ -40,16 +40,65 @@ function initializeAnimations() {
   // Force ScrollTrigger refresh to ensure proper positioning
   ScrollTrigger.refresh();
   
-  // Initialize all animations
-  initGSAPAnimations();
-  initThreeJSEffects();
-  initAnimeJSAnimations();
+  // Use simplified animations on mobile
+  if (window.simplifiedAnimations) {
+    console.log('Using simplified animations for mobile');
+    initSimplifiedAnimations();
+  } else {
+    // Initialize all animations for desktop
+    initGSAPAnimations();
+    initThreeJSEffects();
+    initAnimeJSAnimations();
+  }
   
   // Add scroll event listener for performance optimization
   window.addEventListener('scroll', debounce(checkScrollPosition, 10));
+}
+
+// Simplified animations for mobile
+function initSimplifiedAnimations() {
+  // Fade-in animation for sections with shorter duration
+  gsap.utils.toArray('.fade-in-section').forEach(section => {
+    gsap.from(section, {
+      opacity: 0,
+      y: 30,
+      duration: 0.5,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: section,
+        start: 'top 90%',
+        once: true
+      },
+      onComplete: function() {
+        section.style.opacity = '1';
+        section.style.transform = 'none';
+      }
+    });
+  });
   
-  // Manually trigger scroll event to activate visible animations
-  window.dispatchEvent(new Event('scroll'));
+  // Staggered items animation with shorter duration
+  gsap.utils.toArray('.stagger-container').forEach(container => {
+    const items = container.querySelectorAll('.stagger-item');
+    
+    gsap.from(items, {
+      opacity: 0,
+      y: 20,
+      duration: 0.4,
+      stagger: 0.05,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: container,
+        start: 'top 90%',
+        once: true
+      },
+      onComplete: function() {
+        items.forEach(item => {
+          item.style.opacity = '1';
+          item.style.transform = 'none';
+        });
+      }
+    });
+  });
 }
 
 // ===== GSAP Animations =====
@@ -562,3 +611,5 @@ window.ScrollAnimations = {
   initThreeJSEffects,
   initAnimeJSAnimations
 };
+
+
