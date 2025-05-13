@@ -247,29 +247,32 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// Mobile menu toggle with animation
+// Mobile menu toggle with animation - independent of GSAP
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
 
-menuToggle.addEventListener('click', () => {
-  menuToggle.classList.toggle('active');
-  navLinks.classList.toggle('active');
-  
-  // Prevent scrolling when menu is open
-  document.body.style.overflow = menuToggle.classList.contains('active') ? 'hidden' : '';
-});
-
-// Close mobile menu when clicking a link
-const navItems = document.querySelectorAll('.nav-links ul li a');
-navItems.forEach(item => {
-  item.addEventListener('click', () => {
-    if (navLinks.classList.contains('active')) {
-      menuToggle.classList.remove('active');
-      navLinks.classList.remove('active');
-      document.body.style.overflow = '';
-    }
+if (menuToggle && navLinks) {
+  menuToggle.addEventListener('click', () => {
+    console.log('Menu toggle clicked');
+    menuToggle.classList.toggle('active');
+    navLinks.classList.toggle('active');
+    
+    // Prevent scrolling when menu is open
+    document.body.style.overflow = menuToggle.classList.contains('active') ? 'hidden' : '';
   });
-});
+
+  // Close mobile menu when clicking a link
+  const navItems = document.querySelectorAll('.nav-links ul li a');
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      if (navLinks.classList.contains('active')) {
+        menuToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  });
+}
 
 // Newsletter subscription
 document.addEventListener('DOMContentLoaded', function() {
@@ -363,6 +366,9 @@ if (typeof ScrollSmoother !== 'undefined') {
     }, 200);
   });
 }
+
+
+
 
 
 

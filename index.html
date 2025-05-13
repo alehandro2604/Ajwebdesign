@@ -11,13 +11,19 @@
     const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     window.isMobile = isMobile;
     
-    // Instead of disabling GSAP completely, set a flag for simplified animations
-    window.simplifiedAnimations = isMobile;
-    console.log('Mobile device detected, using simplified animations');
+    // Set global flag immediately before any scripts load
+    if (isMobile) {
+      window.gsapDisabled = true;
+      console.log('Mobile device detected, GSAP disabled');
+    }
   </script>
-  <!-- Always load GSAP but with different configurations -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <!-- Only load GSAP on desktop -->
+  <script>
+    if (!window.gsapDisabled) {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"><\/script>');
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"><\/script>');
+    }
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <style>
@@ -194,22 +200,28 @@
         console.log('Mobile device detected, disabling GSAP animations');
         window.gsapDisabled = true;
       }
+      
+      // Ensure mobile menu toggle works
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navLinks = document.querySelector('.nav-links');
+      
+      if (menuToggle && navLinks) {
+        console.log('Mobile menu elements found, adding event listeners');
+        menuToggle.addEventListener('click', function() {
+          console.log('Menu toggle clicked');
+          menuToggle.classList.toggle('active');
+          navLinks.classList.toggle('active');
+          document.body.style.overflow = menuToggle.classList.contains('active') ? 'hidden' : '';
+        });
+      }
     });
-  </script>
-  <script>
-    // Ensure content visibility after a timeout
-    setTimeout(function() {
-      console.log('Visibility fallback timeout triggered');
-      const allElements = document.querySelectorAll('h1, h2, h3, p, .cta-btn, .service-card, .project-card, nav, .stagger-item');
-      allElements.forEach(el => {
-        el.style.opacity = '1';
-        el.style.visibility = 'visible';
-        el.style.transform = 'none';
-      });
-    }, 2000); // 2 second fallback
   </script>
 </body>
 </html>
+
+
+
+
 
 
 

@@ -34,22 +34,22 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeAnimations() {
   console.log('Initializing advanced scroll animations');
   
+  // Skip GSAP animations on mobile
+  if (window.gsapDisabled) {
+    console.log('GSAP animations disabled for mobile');
+    return;
+  }
+  
   // Register GSAP plugins
   gsap.registerPlugin(ScrollTrigger);
   
   // Force ScrollTrigger refresh to ensure proper positioning
   ScrollTrigger.refresh();
   
-  // Use simplified animations on mobile
-  if (window.simplifiedAnimations) {
-    console.log('Using simplified animations for mobile');
-    initSimplifiedAnimations();
-  } else {
-    // Initialize all animations for desktop
-    initGSAPAnimations();
-    initThreeJSEffects();
-    initAnimeJSAnimations();
-  }
+  // Initialize all animations
+  initGSAPAnimations();
+  initThreeJSEffects();
+  initAnimeJSAnimations();
   
   // Add scroll event listener for performance optimization
   window.addEventListener('scroll', debounce(checkScrollPosition, 10));
@@ -611,5 +611,6 @@ window.ScrollAnimations = {
   initThreeJSEffects,
   initAnimeJSAnimations
 };
+
 
 
