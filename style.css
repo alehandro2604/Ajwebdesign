@@ -254,7 +254,6 @@ nav ul li a.active::before {
   transform: rotate(-135deg);
 }
 
-/* Mobile menu styles */
 @media (max-width: 768px) {
   .menu-toggle {
     display: block;
@@ -289,6 +288,40 @@ nav ul li a.active::before {
   
   nav ul li a {
     font-size: 1.5rem;
+  }
+  
+  .nav-btn {
+    font-size: 1.2rem;
+    padding: 0.8rem 2rem;
+  }
+
+  .hero-content {
+    width: 90%;
+    padding-left: 5%;
+  }
+
+  .cta-btn {
+    margin-left: 0;
+  }
+
+  .services, .featured-projects, .cta-section {
+    padding: 4rem 5%;
+  }
+
+  .projects-showcase {
+    grid-template-columns: 1fr;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .services h2, .featured-projects h2, .cta-section h2 {
+    font-size: 2rem;
   }
 }
 
@@ -847,5 +880,4 @@ section, .hero, .services, .featured-projects, .cta-section {
 nav {
   z-index: 1000;
 }
-
 

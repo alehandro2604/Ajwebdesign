@@ -16,39 +16,25 @@ document.addEventListener('mouseup', () => {
 
 // Safe GSAP check
 document.addEventListener('DOMContentLoaded', function() {
-  // Force elements to be visible on mobile
-  if (window.isMobile || window.gsapDisabled) {
-    console.log('Mobile view: forcing elements to be visible');
+  // Only run this if mobile or gsap was disabled
+  if (window.isMobile) {
+    console.log('Mobile view: ensuring elements are visible');
     
-    // Force all text elements to be visible
-    const textElements = document.querySelectorAll('h1, h2, h3, p, .cta-btn, .service-card, .project-card');
-    textElements.forEach(el => {
-      el.style.opacity = '1';
-      el.style.transform = 'none';
-      el.style.visibility = 'visible';
-      el.style.display = 'block';
-    });
-    
-    // Force specific layout elements
-    document.querySelectorAll('.service-card, .project-card').forEach(card => {
-      card.style.opacity = '1';
-      card.style.transform = 'none';
-    });
-    
-    // Make sure navigation is visible
-    const nav = document.querySelector('nav');
-    if (nav) {
-      nav.style.display = 'flex';
-      nav.style.opacity = '1';
-      nav.style.visibility = 'visible';
-    }
-    
-    // Skip all GSAP code
-    return;
+    // Make sure elements are visible but allow for animations
+    setTimeout(() => {
+      const textElements = document.querySelectorAll('h1, h2, h3, p, .cta-btn, .service-card, .project-card');
+      textElements.forEach(el => {
+        if (parseFloat(getComputedStyle(el).opacity) < 0.5) {
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+          el.style.visibility = 'visible';
+        }
+      });
+    }, 2000); // Give animations 2 seconds to start, then force visibility
   }
   
-  // Only run GSAP code if it's available and not disabled
-  if (typeof gsap !== 'undefined' && !window.gsapDisabled) {
+  // Run GSAP code regardless of device type
+  if (typeof gsap !== 'undefined') {
     // GSAP animations
     gsap.from('nav', {
       opacity: 0,
@@ -298,6 +284,7 @@ if (typeof ScrollSmoother !== 'undefined') {
     }, 200);
   });
 }
+
 
 
 

@@ -5,34 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aleandro | AJWebDesign</title>
   <link rel="stylesheet" href="./css/style.css">
-  <!-- Load core libraries conditionally -->
-  <script>
-    // More robust mobile detection
-    const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    window.isMobile = isMobile;
-    
-    // Set global flag immediately before any scripts load
-    if (isMobile) {
-      window.gsapDisabled = true;
-      console.log('Mobile device detected, GSAP disabled');
-    }
-  </script>
-  <!-- Only load GSAP on desktop -->
-  <script>
-    if (!window.gsapDisabled) {
-      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"><\/script>');
-      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"><\/script>');
-    }
-  </script>
+  
+  <!-- Simplified script loading - always load all libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  
+  <!-- Ensure content visibility -->
   <style>
-    /* Force nav to display */
-    nav {
-      display: flex !important;
+    /* Base visibility styles */
+    body * {
       opacity: 1 !important;
       visibility: visible !important;
-      z-index: 1000 !important;
     }
     
     /* Hide 3D object on mobile */
@@ -45,27 +30,11 @@
         width: 100%;
         text-align: center;
       }
-      
-      /* Mobile fallback styles to ensure content visibility */
-      h1, h2, h3, p, .cta-btn, .service-card, .project-card, .stagger-item, .text-reveal {
-        opacity: 1 !important;
-        transform: none !important;
-        visibility: visible !important;
-        display: block !important;
-      }
-      
-      .services-grid, .projects-showcase {
-        display: grid !important;
-        opacity: 1 !important;
-      }
-      
-      .fade-in-section, .stagger-container {
-        opacity: 1 !important;
-      }
     }
   </style>
 </head>
 <body>
+  <script src="./js/universal-fix.js"></script>
   <div class="cursor"></div>
   <nav>
     <div class="logo">AJWebDesign</div>
@@ -204,6 +173,8 @@
   </script>
 </body>
 </html>
+
+
 
 
 

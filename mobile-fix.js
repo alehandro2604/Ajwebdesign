@@ -2,16 +2,22 @@
 document.addEventListener('DOMContentLoaded', function() {
   console.log('Mobile fix script loaded');
   
-  // Force all animation elements to be visible initially
+  // Debug info
+  console.log('Document ready state:', document.readyState);
+  console.log('Window inner dimensions:', window.innerWidth, 'x', window.innerHeight);
+  
+  // Force all animation elements to be visible immediately
   const animatedElements = document.querySelectorAll(
     'h1, h2, h3, p, .cta-btn, .service-card, .project-card, .stagger-item, ' +
     '.text-reveal, .services-grid, .projects-showcase, .fade-in-section, ' +
     '.stagger-container, .skill-item, .timeline-item, .education-item'
   );
   
+  console.log('Found animated elements:', animatedElements.length);
+  
   animatedElements.forEach(el => {
-    // Set initial visibility but allow GSAP to animate
-    el.style.opacity = '0.01';  // Almost invisible but not 0
+    // Force visibility immediately
+    el.style.opacity = '1';  
     el.style.visibility = 'visible';
     el.style.display = el.tagName.toLowerCase() === 'div' ? 'block' : '';
   });
@@ -19,26 +25,15 @@ document.addEventListener('DOMContentLoaded', function() {
   // Ensure nav is visible
   const nav = document.querySelector('nav');
   if (nav) {
+    console.log('Nav found, forcing display');
     nav.style.display = 'flex';
     nav.style.opacity = '1';
     nav.style.visibility = 'visible';
+  } else {
+    console.error('Nav element not found');
   }
   
-  // Adjust Three.js canvas for mobile
-  const threeDElements = document.querySelectorAll('#hero-3d, #about-3d, #projects-3d, #contact-3d');
-  if (window.isMobile) {
-    threeDElements.forEach(el => {
-      if (el) {
-        el.style.opacity = '0.5';
-        el.style.height = '100%';
-        el.style.width = '100%';
-        el.style.position = 'absolute';
-        el.style.zIndex = '-1';
-      }
-    });
-  }
-  
-  // Ensure GSAP is available and working
+  // Ensure GSAP is available
   if (typeof gsap !== 'undefined') {
     console.log('GSAP is loaded and available');
     window.gsapDisabled = false;
