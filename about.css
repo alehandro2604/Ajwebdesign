@@ -944,18 +944,3 @@
   align-self: flex-start;
 }
 
-/* Disable animations on mobile devices for the timeline section */
-@media screen and (max-width: 768px) {
-  .timeline-item {
-    animation: none !important;
-    transition: none !important;
-  }
-  .timeline-dot {
-    animation: none !important;
-    transition: none !important;
-  }
-  .timeline-content {
-    animation: none !important;
-    transition: none !important;
-  }
-}
