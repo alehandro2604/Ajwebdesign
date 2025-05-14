@@ -1001,17 +1001,18 @@
   }
 }
 
-/* Ensure animations work on touch devices */
-@media (hover: none) {
+/* Disable animations on mobile devices for the timeline section */
+@media screen and (max-width: 768px) {
   .timeline-item {
-    animation-play-state: running !important;
+    animation: none !important;
+    transition: none !important;
   }
-  
   .timeline-dot {
-    animation-play-state: running !important;
+    animation: none !important;
+    transition: none !important;
   }
-  
   .timeline-content {
-    animation-play-state: running !important;
+    animation: none !important;
+    transition: none !important;
   }
 }
