@@ -149,6 +149,8 @@
   width: 50%;
   left: 0;
   margin-bottom: 2rem;
+  animation: fadeIn 0.5s ease-out;
+  transform: translateZ(0); /* Hardware acceleration */
 }
 
 .timeline-item:nth-child(even) {
@@ -164,6 +166,8 @@
   top: 20px;
   right: -10px;
   z-index: 2;
+  animation: pulse 2s infinite;
+  transform: translateZ(0); /* Hardware acceleration */
 }
 
 .timeline-item:nth-child(even) .timeline-dot {
@@ -179,6 +183,8 @@
   margin-right: 30px;
   position: relative;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: slideIn 0.5s ease-out;
+  transform: translateZ(0); /* Hardware acceleration */
 }
 
 .timeline-content:hover {
@@ -944,3 +950,68 @@
   align-self: flex-start;
 }
 
+/* Mobile animation optimizations */
+.timeline-item {
+  animation: fadeIn 0.5s ease-out;
+  transform: translateZ(0); /* Hardware acceleration */
+}
+
+.timeline-dot {
+  animation: pulse 2s infinite;
+  transform: translateZ(0); /* Hardware acceleration */
+}
+
+.timeline-content {
+  animation: slideIn 0.5s ease-out;
+  transform: translateZ(0); /* Hardware acceleration */
+}
+
+/* Keyframes for mobile animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Ensure animations work on touch devices */
+@media (hover: none) {
+  .timeline-item {
+    animation-play-state: running !important;
+  }
+  
+  .timeline-dot {
+    animation-play-state: running !important;
+  }
+  
+  .timeline-content {
+    animation-play-state: running !important;
+  }
+}
