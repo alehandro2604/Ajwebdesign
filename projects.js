@@ -147,6 +147,57 @@ gsap.from('.cta-content', {
   }
 });
 
+// Project tags animations
+const tagItems = document.querySelectorAll('.tag-item');
+
+tagItems.forEach((tag, index) => {
+  // Hover animation
+  tag.addEventListener('mouseenter', () => {
+    gsap.to(tag, {
+      scale: 1.2,
+      backgroundColor: '#6c63ff',
+      color: '#fff',
+      duration: 0.3,
+      ease: 'power2.out'
+    });
+  });
+
+  tag.addEventListener('mouseleave', () => {
+    gsap.to(tag, {
+      scale: 1,
+      backgroundColor: '#f8f9fa',
+      color: '#333',
+      duration: 0.3,
+      ease: 'power2.out'
+    });
+  });
+
+  // Initial stagger animation
+  gsap.from(tag, {
+    opacity: 0,
+    y: 20,
+    duration: 0.5,
+    delay: index * 0.1,
+    ease: 'power2.out'
+  });
+});
+
+// Add scroll animation for project tags
+ScrollTrigger.create({
+  trigger: '.projects-grid',
+  start: 'top 80%',
+  onEnter: () => {
+    tagItems.forEach(tag => {
+      gsap.to(tag, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: 'power2.out'
+      });
+    });
+  }
+});
+
 // Three.js background
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -286,8 +337,3 @@ window.addEventListener('scroll', () => {
     nav.classList.remove('nav-scrolled');
   }
 });
-
-
-
-
-
