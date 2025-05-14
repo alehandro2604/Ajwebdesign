@@ -14,77 +14,10 @@ document.addEventListener('mouseup', () => {
   cursor.style.transform = 'translate(-50%, -50%) scale(1)';
 });
 
-// Ensure DOM is fully loaded
+// Make sure DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-  // Register GSAP plugins
+  // GSAP animations
   gsap.registerPlugin(ScrollTrigger);
-
-  // Initialize timeline animations
-  const timelineItems = document.querySelectorAll('.timeline-item');
-  timelineItems.forEach((item, index) => {
-    gsap.from(item, {
-      opacity: 0,
-      y: 50,
-      duration: 0.8,
-      delay: index * 0.2,
-      ease: 'power2.out'
-    });
-
-    // Add scroll animations
-    gsap.from(item, {
-      opacity: 0,
-      y: 50,
-      duration: 0.8,
-      scrollTrigger: {
-        trigger: item,
-        start: 'top 80%',
-        toggleActions: 'play none none reverse'
-      }
-    });
-  });
-
-  // Initialize dot animations
-  const timelineDots = document.querySelectorAll('.timeline-dot');
-  timelineDots.forEach(dot => {
-    gsap.to(dot, {
-      scale: 1.1,
-      duration: 1,
-      repeat: -1,
-      yoyo: true,
-      ease: 'power2.inOut'
-    });
-  });
-
-  // Initialize content animations
-  const timelineContents = document.querySelectorAll('.timeline-content');
-  timelineContents.forEach((content, index) => {
-    gsap.from(content, {
-      opacity: 0,
-      x: -50,
-      duration: 0.6,
-      delay: index * 0.1,
-      ease: 'power2.out'
-    });
-  });
-
-  // Add hover animations
-  timelineContents.forEach(content => {
-    content.addEventListener('mouseenter', () => {
-      gsap.to(content, {
-        y: -5,
-        boxShadow: '0 10px 20px rgba(0,0,0,0.2)',
-        duration: 0.3
-      });
-    });
-
-    content.addEventListener('mouseleave', () => {
-      gsap.to(content, {
-        y: 0,
-        boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
-        duration: 0.3
-      });
-    });
-  });
 
   // Debug info
   console.log('Skills found:', document.querySelectorAll('.skill').length);
@@ -381,3 +314,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+
+
+
